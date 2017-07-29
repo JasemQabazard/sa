@@ -1,0 +1,143 @@
+        <div class="container" ng-controller="ContactController"> <!-- Start Container for all rows -->  
+            <br/><br/><br/><br/><br/><br/>
+            <!-- contact us by email -->
+            <div class="row row-content">
+                <div class="col-xs-12">
+                    <h2 align=center>Contact Us - Please complete this form then press send</h2>
+                </div>
+                
+                <div class="col-xs-12 col-sm-push-2 col-sm-10">
+                    <form class="form-horizontal" role="form" name="contactSupportForm" ng-submit="sendMessage()" novalidate>
+                        <p class="col-xs-12">&nbsp;</p>
+                        <div class="form-group has-feedback" ng-class="{'has-error': contactSupportForm.firstname.$error.required && !contactSupportForm.firstname.$pristine}">
+                            <label for="firstname" class="col-sm-2 control-label">First Name *</label>                      <div class="col-sm-7">
+                                <i class="glyphicon glyphicon-user form-control-feedback"></i>
+                                <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter First Name *" ng-model="contactSupport.firstname" required>
+                                <span ng-show="contactSupportForm.firstname.$error.required && !contactSupportForm.firstname.$pristine" class="help=block error">Please Enter Your First Name it is Required! </span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{'has-error':  contactSupportForm.lastname.$error.required && !contactSupportForm.lastname.$pristine}">
+                            <label for="lastname" class="col-sm-2 control-label">Last Name*</label>
+                            <div class="col-sm-7">
+                                <i class="glyphicon glyphicon-user form-control-feedback"></i>
+                                <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter Last Name*" NG-MODEL="contactSupport.lastname" required>
+                                <span ng-show="contactSupportForm.lastname.$error.required && !contactSupportForm.lastname.$pristine" class="help=block error">Please Enter Your Last Name it is Required! </span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{'has-error': countryCodeNotSelected}">
+                            <label for="telnum" class="col-xs-12 col-sm-2 control-label">Contact Tel.</label>
+                            <div class="col-xs-5 col-sm-3">
+                                <div class="input-group">
+                                    <div class="input-group-addon">(</div>
+                                        <select class="form-control" id="countrycode" name="countrycode"
+                                            ng-model="contactSupport.phone.countrycode"
+                                            ng-options="phoneCode.code as phoneCode.name for phoneCode in phoneCodes">
+                                            <option value="">+Code!</option>
+                                        </select>
+                                        <span ng-show="countryCodeNotSelected" class="help=block error">You must select a country code!</span>
+                                    <div class="input-group-addon">)</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-7 col-sm-4" ng-class="{'has-error':  (contactSupportForm.telnum.$error.required && !contactSupportForm.telnum.$pristine)}">
+                                <input type="number" class="form-control" id="telnum" name="telnum" placeholder="Tel. number"  ng-model="contactSupport.phone.telnum" required>
+                                <i class="glyphicon glyphicon-earphone form-control-feedback"></i>
+                                <span ng-show="contactSupportForm.telnum.$error.required && !contactSupportForm.telnum.$pristine" class="help=block error">Please Enter Your Phone Number Correctly!</span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{'has-error': contactSupportForm.emailid.$invalid && !contactSupportForm.emailid.$pristine}">
+                            <label for="emailid" class="col-sm-2 control-label">Email *</label>
+                            <div class="col-sm-7">
+                                <input type="email" class="form-control" id="emailid" name="emailid" placeholder="Email id *" ng-model="contactSupport.emailid" required>
+                                <i class="glyphicon glyphicon-envelope form-control-feedback"></i>
+                                <span ng-show="contactSupportForm.emailid.$invalid && !contactSupportForm.emailid.$pristine" class="help=block error">Your email ID is not valid!</span>
+                                <span ng-show="contactSupportForm.emailid.$error.required && !contactSupportForm.emailid.$pristine" class="help=block error">Your email ID is missing!</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority" class="col-sm-2 control-label">Message Priority</label>
+                            <div class="col-sm-7">
+                                <label class="radio-inline">
+                                    <input type="radio" id="priority1" name="priority" value="1" ng-model="contactSupport.priority"> 1
+                                </label> 
+                                <label class="radio-inline">
+                                    <input type="radio" id="priority2" name="priority" value="2" ng-model="contactSupport.priority"> 2
+                                </label> 
+                                <label class="radio-inline">
+                                    <input type="radio" id="priority3" name="priority" checked="checked" value="3" ng-model="contactSupport.priority"> 3
+                                </label> 
+                                <label class="radio-inline">
+                                    <input type="radio" id="priority4" name="priority" value="4" ng-model="contactSupport.priority"> 4
+                                </label> 
+                                <label class="radio-inline">
+                                    <input type="radio" id="priority5" name="priority" value="5" ng-model="contactSupport.priority"> 5
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{'has-error': subjectNotSelected}">
+                            <label for="subject" class="col-sm-2 control-label">Subject *</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" id="subject" name="subject"
+                                            ng-model="contactSupport.subject"
+                                            ng-options="subject.value as subject.label for subject in subjects">
+                                    <option value="">Select a Subject Please!</option>
+                                </select>
+                                <span ng-show="subjectNotSelected" class="help=block error">You must select a subject!</span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{'has-error': contactSupportForm.message.$error.required && !contactSupportForm.message.$pristine}">
+                            <label for="message" class="col-sm-2 control-label">Message *</label>
+                            <div class="col-sm-7">
+                                <textarea id="message" name="message" class="form-control" placeholder="Message us please *" rows="10" ng-model="contactSupport.message" required></textarea>
+                                <i class="glyphicon glyphicon-comment form-control-feedback"></i>
+                                <span ng-show="contactSupportForm.message.$error.required && !contactSupportForm.message.$pristine" class="help=block error">Your issue description is missing!</span>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-class="{'has-error': CAPTCHANOTPASS}">
+                            <div class="col-sm-offset-5">
+                                <div class="g-recaptcha" data-sitekey="6LeWAyoTAAAAAFeKeuNu3Tx23U4meb5qZb0c1q0E"></div>
+                                <span ng-show="CAPTCHANOTPASS" class="help=block error">You are NOT HUMAN!!! What Are You? :)</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-5">
+                                <button type="submit" class="btn btn-lg btn-success btn-send" ng-disabled="contactSupportForm.$invalid">Send Message to Support</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="alert alert-success alert-dismissible fade in col-sm-offset-2 popAlerts" id="confirmationAlert" role="alert" ng-show="yourMessageWasSent">
+                                <strong>Your Message</strong> was sent to support, thank you for using our service
+                            </div>
+                            <div class="alert alert-danger alert-dismissible fade in col-sm-offset-2" id="errorAlert" role="alert" ng-show="errorMessageToggle">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <strong>Your have an ERROR: </strong> {{errorMessage}}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--
+                <div class="col-xs-12">
+                        <p class="col-xs-12">&nbsp;</p>
+                        <p>{{contactSupport.firstname}}</p>
+                        <p>{{contactSupport.lastname}}</p>
+                        <p>{{contactSupport.phone}}</p>
+                        <p>{{contactSupport.emailid}}</p>
+                        <p>{{contactSupport.priority}}</p>
+                        <p>{{contactSupport.subject}}</p>
+                        <p>{{contactSupport.message}}</p>
+                </div>
+                -->
+            </div>
+        </div> <!-- / End Container for all rows -->
+<footer class="other-footer">
+    <br /><br />
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <p align=center><i class="fa fa-copyright" aria-hidden="true"></i> Copyright 2015 Jasem Qabazard (Success Architecture)</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src='https://www.google.com/recaptcha/api.js'></script>

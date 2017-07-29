@@ -1,0 +1,156 @@
+body {
+    background-color: #f1ddcb;
+}
+h1, h2, h3, h4 {
+  line-height: 1.45;
+}
+@media screen and (max-width: 768px) {
+    h1{
+        font-size:24px;
+    }
+}
+.well{
+    background: rgb(0, 176, 235);
+    border-radius: 50px;
+}
+.row-header {
+	margin:0px auto;
+	padding:0px;
+}
+.row-content {
+	margin:0px auto;
+	padding:50px 0px 50px 0px;
+	border-bottom:1px ridge;
+	min-height:400px;
+}
+.row-footer{
+	background-color:#4A2401;
+	margin:0px auto;
+	padding:20px 0px 20px 0px;
+    color:#F2ECE6;
+    height:250px;
+}
+.other-footer{
+	background-color:#4A2401;
+    color:#F2ECE6;
+    height:80px;
+}
+.myLogo {
+    margin-top: 1px;
+    position: fixed;
+    width:200px;
+    height: 200px;
+}
+/* navbar */
+.navbar-default {
+  background-color:#FAD23E;
+  background-image: none;
+  background-repeat: no-repeat;
+ }
+.slide1{
+    min-width: 100%;
+    height: 1000px;  /* your desired height for this slide */
+    background: url(/images/24141.JPG) no-repeat center center;
+    background-size: cover;
+}
+.slide2{
+    height: 1000px;  /* your defor this slide */
+    background: url(/images/2104.JPG) no-repeat center center;
+    background-size: cover;
+}
+.slide3{
+    height: 1000px;  /* your desired height for this slide */
+    background: url(/images/10072049.JPG) no-repeat center center;
+    background-size: cover;
+}
+#myCarousel .carousel-caption {
+    color: #ffffff;
+    right: 35%;
+    text-align: center;
+    max-width: 700px;
+    left: auto;
+    top: 55%;
+}
+#myCarousel .carousel-caption >a{
+    background-color:#FAD23E;
+}
+.logistics{
+    margin-top: 10px;
+    color: #828078;
+}
+.container2{
+    background: url(/images/banner.png) no-repeat center center;
+    background-size: cover;
+    min-width: 100%;
+    padding:0px;
+    margin:0px;
+}
+.advert{
+    background: #ffffff;
+    width:350px;
+    height:350px;
+    margin:10px;
+    padding:0px;
+}
+.advert img{
+    width:100%;
+    height:100%;
+}
+#jmq{
+    border: 1px solid black;
+    width:170px;
+    height:250px;
+    border-radius: 30px;
+}
+#abouText {
+    margin-left: 15px;
+}
+.error {
+    color: red;
+}
+.alert {
+   font-size: 12px;
+    width:50%;
+    height: 33px;
+    padding:7px;
+}
+#confirmationAlert {
+    width:58%;
+    font-size: 16px;
+}
+.wellPops {
+    background:#DFEAED;
+    width:41%;
+}
+.keepmelogged{
+    margin-left:20px;
+}
+.popFormDiv{
+    background: rgb(0, 176, 235);
+    border-radius: 50px;
+    padding:20px;
+}
+.popFormBtn {
+    padding-left:20px;
+}
+.popAlerts {
+   margin-top:20px;
+   text-align:center;
+   height:60px;
+   vertical-align:middle;
+   font-size:16px;
+}
+.loginAlerts {
+   text-align:center;
+   vertical-align:middle;
+   margin-left:50px;
+   font-size:16px;
+   height:60px;
+}
+.glyph{
+   border:1px solid #fff;
+   background-color:#fff;
+}
+input, select, textarea {
+    background-color: rgb(245,245,245) !important;
+}

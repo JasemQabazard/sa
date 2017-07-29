@@ -1,0 +1,117 @@
+        <div class="container" ng-controller="RegisterController"> <!-- Start Container for all rows -->  
+            <br/><br/><br/><br/>
+            <!-- Register -->
+            <div class="row row-content">
+                <br /><br />
+                <div class="col-xs-12 col-sm-push-2 col-sm-10">
+                    <form class="form-horizontal" role="form" name="registerForm" ng-submit="sendRegistrationeMail()" 
+                           novalidate>
+                        <fieldset ng-disabled="yourRegistrationWasSent">
+                            <p class="col-xs-12">&nbsp;</p>
+                            <div class="form-group has-feedback" ng-class="{'has-error': registerForm.username.$error.required && !registerForm.username.$pristine}">
+                                <label for="username" class="col-sm-2 col-sm-offset-2 control-label">User Name *</label>
+                                <div class="col-sm-5">
+                                    <i class="glyphicon glyphicon-user form-control-feedback"></i>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter User Name *" ng-model="registerData.username" required>
+                                    <span ng-show="registerForm.username.$error.required && !registerForm.username.$pristine" class="help=block error">Please Enter Your USER Name it is Required! </span>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-error':  registerForm.password.$error.required && !registerForm.password.$pristine}">
+                                <label for="lastname" class="col-sm-2 col-sm-offset-2 control-label">Password*</label>
+                                <div class="col-sm-5">
+                                    <i class="glyphicon glyphicon-lock form-control-feedback"></i>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter PASSWORD*" NG-MODEL="registerData.password" required>
+                                    <span ng-show="registerForm.password.$error.required && !registerForm.password.$pristine" class="help=block error">Please Enter Your PASSWORD! it is Required! </span>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-error': registerForm.emailid.$invalid && !registerForm.emailid.$pristine}">
+                                <label for="emailid" class="col-sm-2 col-sm-offset-2 control-label">Email *</label>
+                                <div class="col-sm-5">
+                                    <input type="email" class="form-control" id="emailid" name="emailid" placeholder="Email id *" ng-model="registerData.emailid" required>
+                                    <i class="glyphicon glyphicon-envelope form-control-feedback"></i>
+                                    <span ng-show="registerForm.emailid.$invalid && !registerForm.emailid.$pristine" class="help=block error">Your email ID is not valid!</span>
+                                    <span ng-show="registerForm.emailid.$error.required && !registerForm.emailid.$pristine" class="help=block error">Your email ID is missing!</span>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-error': registerForm.firstname.$error.required && !registerForm.firstname.$pristine}">
+                                <label for="firstname" class="col-sm-2 col-sm-offset-2 control-label">First Name *</label>
+                                <div class="col-sm-5">
+                                    <i class="glyphicon glyphicon-user form-control-feedback"></i>
+                                    <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter First Name *" ng-model="registerData.firstname" required>
+                                    <span ng-show="registerForm.firstname.$error.required && !registerForm.firstname.$pristine" class="help=block error">Please Enter Your First Name it is Required! </span>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-error':  registerForm.lastname.$error.required && !registerForm.lastname.$pristine}">
+                                <label for="lastname" class="col-sm-2 col-sm-offset-2 control-label">Last Name*</label>
+                                <div class="col-sm-5">
+                                    <i class="glyphicon glyphicon-user form-control-feedback"></i>
+                                    <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter Last Name*" NG-MODEL="registerData.lastname" required>
+                                    <span ng-show="registerForm.lastname.$error.required && !registerForm.lastname.$pristine" class="help=block error">Please Enter Your Last Name it is Required! </span>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-class="{'has-error': CAPTCHANOTPASS}">
+                                <div class="col-sm-offset-5">
+                                    <div class="g-recaptcha" data-sitekey="6LeWAyoTAAAAAFeKeuNu3Tx23U4meb5qZb0c1q0E"></div>
+                                    <span ng-show="CAPTCHANOTPASS" class="help=block error">You are NOT HUMAN!!! What Are You? :)</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-7">
+                                    <button type="submit" class="btn btn-md btn-danger btn-send" ng-disabled="registerForm.$invalid">Send Registration</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <br /><br /><br />
+                    <div  class="col-sm-offset-6 col-sm-1" ng-show="showSpinner">
+                        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <form class="form-horizontal" role="form" name="registerCodeForm" ng-submit="sendRegistrationCode()" novalidate ng-show="yourRegistrationWasSent">
+                        <div class="col-sm-offset-4 col-sm-5 popFormDiv">
+                            <p><strong>Registration Code </strong>was sent to your Email</p>
+                            <p>Check your inBox and your SPAM folders please</p>
+                            <p><strong>Enter Registration Code </strong></p>
+                            <div class="form-group">
+                                <button class="btn btn-link" ng-click="resendEmail()"><span class="glyphicon glyphicon-repeat"></span> Resend Registration Code email</button>
+                            </div>
+                            <br />
+                            <div class="form-group has-feedback">
+                                <div class="col-sm-12">
+                                    <i class="glyphicon glyphicon-check form-control-feedback"></i>
+                                    <input type="text" class="form-control" id="registrationcode" name="registrationcode" placeholder="Enter Registration Code" NG-MODEL="RegistrationCodeInput" required>
+                                    <span ng-show="registerCodeForm.registrationcode.$error.required && !registerCodeForm.registrationcode.$pristine" class="help=block error">Enter Registration Code </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="popFormBtn">
+                                    <button type="submit" class="btn btn-sm btn-default btn-send" ng-disabled="registerCodeForm.$invalid">Submit Registration Code</button>
+                                </div>
+                            </div>
+                         </div>
+                    </form>
+                    <br /><br /><br />
+                </div>
+                <div class="col-xs-12 col-sm-push-4 col-sm-8">
+                    <div class="alert alert-success alert-dismissible fade in col-sm-offset-2 popAlerts" id="RegistrationAlert" role="alert" ng-show="yourRegistrationComplete">
+                        <strong>Your Registration </strong> was Successfull, Redirecting to sign on
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade in col-sm-offset-2 popAlerts" id="errorAlert" role="alert" ng-show="errorMessageToggle">
+                        <strong>ERROR: </strong> {{errorMessage}}
+                    </div>
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+        </div> <!-- / End Container for all rows -->
+
+<footer class="other-footer">
+    <br /><br />
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <p align=center><i class="fa fa-copyright" aria-hidden="true"></i> Copyright 2015 Jasem Qabazard (Success Architecture)</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src='https://www.google.com/recaptcha/api.js'></script>

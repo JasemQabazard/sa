@@ -1,0 +1,151 @@
+        <div class="container" ng-controller="LoginController"> <!-- Start Container for all rows -->  
+            <br/><br/><br/>
+            <!-- Login -->
+            <div class="row row-content">
+                <br /><br />
+                <div class="col-xs-12 col-sm-10">
+                    <form class="form-horizontal" role="form" name="loginForm" ng-submit="sendLogin()" novalidate>
+                        <fieldset ng-disabled="youForgetPasswordDisable">
+                            <p class="col-xs-12">&nbsp;</p>
+                            <div class="form-group has-feedback" ng-class="{'has-error': loginForm.username.$error.required && !loginForm.username.$pristine}">
+                                  <div class="col-sm-5 col-sm-offset-3">
+                                    <i class="glyphicon glyphicon-user form-control-feedback"></i>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter User Name *" ng-model="loginData.username" required>
+                                    <span ng-show="loginForm.username.$error.required && !loginForm.username.$pristine" class="help=block error">USER Name Missing! </span>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-error':  loginForm.password.$error.required && !loginForm.password.$pristine}">
+                                <div class="col-sm-5 col-sm-offset-3">
+                                    <i class="glyphicon glyphicon-lock form-control-feedback"></i>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="PASSWORD*" NG-MODEL="loginData.password" required>
+                                    <span ng-show="loginForm.password.$error.required && !loginForm.password.$pristine" class="help=block error">PASSWORD Missing </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-3 col-sm-offset-3">
+                                    <label class="checkbox keepmelogged">
+                                        <input type="checkbox" class="checkbox keepmelogged" value="keepmein" id="keepmein" ng-model="keepmein"> Keep me looged in
+                                    </label>
+                                </div>
+                                <br />
+                                <div class="col-sm-1 keepmelogged">
+                                    <button type="submit" class="btn btn-md btn-default btn-send" ng-disabled="loginForm.$invalid">Log In</button>
+                                </div>
+                                <div class="col-sm-3 col-sm-offset-6">
+                                    <button class="btn btn-link" ng-click="forgetPassword()"><span class="glyphicon glyphicon-pushpin"></span> Forget Password</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <form class="form-horizontal" role="form" name="forgetPasswordForm" ng-submit="sendEmailId()" novalidate ng-show="youForgetPassword">
+                        <div class="col-xs-12 col-sm-5 popFormDiv col-sm-offset-3">
+                            <p><strong>Enter Your Email ID twice and Submit Please</strong></p>
+                            <div class="form-group has-feedback" ng-class="{'has-error': forgetPasswordForm.emailForget.$invalid && !forgetPasswordForm.emailForget.$pristine}">
+                                <div class="col-sm-12">
+                                    <input type="email" class="form-control" id="emailForget" name="emailForget" placeholder="EMAIL" ng-model="forgetPasswordData.emailid" required>
+                                    <i class="glyphicon glyphicon-envelope form-control-feedback"></i>
+                                    <span ng-show="forgetPasswordForm.forgetPassword.$invalid && !forgetPasswordForm.forgetPassword.$pristine" class="help=block error">Your email ID is not valid!</span>
+                                    <span ng-show="forgetPasswordForm.forgetPassword.$error.required && !forgetPasswordForm.forgetPassword.$pristine" class="help=block error">Your email ID is missing!</span>
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-error': forgetPasswordForm.emailForgetConfirm.$invalid && !forgetPasswordForm.emailForgetConfirm.$pristine
+                                                                    || forgetPasswordForm.emailForgetConfirm.$error.match}">
+                                <div class="col-sm-12">
+                                    <input type="email" class="form-control" id="emailForgetConfirm" name="emailForgetConfirm" placeholder="EMAIL CONFIRMATION" 
+                                           ng-model="forgetPasswordData.emailidconfirm" match="forgetPasswordData.emailid" required>
+                                    <i class="glyphicon glyphicon-envelope form-control-feedback" style="color:red"></i>
+                                    <span ng-show="forgetPasswordForm.emailForgetConfirm.$invalid && !forgetPasswordForm.emailForgetConfirm.$pristine" class="help=block error">Your confirm email ID is not valid!</span>
+                                    <span ng-show="forgetPasswordForm.emailForgetConfirm.$error.required && !forgetPasswordForm.emailForgetConfirm.$pristine" class="help=block error">Your confirm email ID is missing!</span>
+                                    <span ng-show="forgetPasswordForm.emailForgetConfirm.$error.match && !forgetPasswordForm.emailForgetConfirm.$pristine" class="help=block error">Email Codes do not match!</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="">
+                                    <button type="submit" class="btn btn-sm btn-default btn-send keepmelogged" ng-disabled="forgetPasswordForm.$invalid">Submit Email Id</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col-sm-offset-4 col-sm-1" ng-show="showSpinner">
+                        <p class="col-xs-12">&nbsp;</p>
+                        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <form class="form-horizontal" role="form" name="forgetPasswordCodeForm" ng-submit="sendForgetPasswordCode()" ng-show="yourCodeWasSent" novalidate>
+                        <div class="col-xs-12 col-sm-offset-3 col-sm-5 popFormDiv">
+                            <p><strong>Forget Password Code </strong>was sent to your Email</p>
+                            <p>Check your inBox and your SPAM folders please</p>
+                            <p><strong>Enter Forget Password Code </strong></p>
+                            <div class="form-group">
+                                <button class="btn btn-link" ng-click="resendEmail()"><span class="glyphicon glyphicon-repeat"></span> Resend Forget Password Code email</button>
+                            </div>
+                            <br />
+                            <div class="form-group has-feedback">
+                                <div class="col-sm-12">
+                                    <i class="glyphicon glyphicon-check form-control-feedback"></i>
+                                    <input type="text" class="form-control" id="forgetpasswordcode" name="forgetpasswordcode" placeholder="Enter Forget Password Code" ng-model="passwordCodeInput" required>
+                                    <span ng-show="forgetPasswordCodeForm.forgetpasswordcode.$error.required && !forgetPasswordCodeForm.forgetpasswordcode.$pristine" class="help=block error">Enter Password Code </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="popFormBtn">
+                                    <button type="submit" class="btn btn-sm btn-default btn-send" ng-disabled="forgetPasswordCodeForm.$invalid">Submit Password Code</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        <p class="col-xs-12">&nbsp;</p>
+                    </div>
+                    <form class="form-horizontal" role="form" name="PasswordChangeForm" ng-submit="sendPasswordChange()" ng-show="showPasswordChange" novalidate>
+                        <div class="form-group has-feedback" ng-class="{'has-error':  PasswordChangeForm.password1.$error.required && !PasswordChangeForm.password1.$pristine}">
+                            <div class="col-sm-5 col-sm-offset-3">
+                                <i class="glyphicon glyphicon-lock form-control-feedback"></i>
+                                <input type="password" class="form-control" id="password1" name="password1" placeholder="PASSWORD1*" ng-model="passwordData.password1" required>
+                                <span ng-show="PasswordChangeForm.password1.$error.required && !PasswordChangeForm.password1.$pristine" class="help=block error">PASSWORD 1 Missing </span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback" ng-class="{'has-error':  PasswordChangeForm.password2.$error.required && !PasswordChangeForm.password2.$pristine
+                                                  || PasswordChangeForm.password2.$error.match}">
+                            <div class="col-sm-5 col-sm-offset-3">
+                                <i class="glyphicon glyphicon-lock form-control-feedback"></i>
+                                <input type="password" class="form-control" id="password2" name="password2" placeholder="PASSWORD2*"
+                                       ng-model="passwordData.password2" match="passwordData.password1" required>
+                                <span ng-show="PasswordChangeForm.password2.$error.required && !PasswordChangeForm.password2.$pristine" class="help=block error">PASSWORD 2 Missing </span>
+                                <span ng-show="PasswordChangeForm.password2.$error.match  && !PasswordChangeForm.password2.$pristine" class="help=block error">PASSWORD 1 does not match PASSWORD 2 </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <br />
+                            <div class="col-sm-1 col-sm-offset-3">
+                                <button type="submit" class="btn btn-md btn-default btn-send" ng-disabled="PasswordChangeForm.$invalid">Send Password Change</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="col-xs-12 col-sm-offset-2 col-sm-8">
+                    <br /><br />
+                    <div class="alert alert-success alert-dismissible fade in loginAlerts" id="PasswordResetAlert" role="alert" ng-show="yourPasswordResetComplete">
+                        <strong>Your Password Reset </strong> was Successfull, Redirecting to sign on
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade in loginAlerts" id="errorAlert" role="alert" ng-show="errorMessageToggle">
+                        <strong>ERROR: </strong> {{errorMessage}}
+                    </div>
+                    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                </div>
+                
+            </div>
+        </div> <!-- / End Container for all rows -->
+
+<footer class="other-footer">
+    <br /><br />
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <p align=center><i class="fa fa-copyright" aria-hidden="true"></i> Copyright 2015 Jasem Qabazard (Success Architecture)</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src='https://www.google.com/recaptcha/api.js'></script>
