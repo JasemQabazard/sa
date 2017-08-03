@@ -23,6 +23,14 @@ angular
                     }
                 }
             })
+            .state('saapp.blog', {
+                url: 'blog',
+                views: {
+                    'content@': {
+                        templateUrl:'views/blog.html'
+                    }
+                }
+            })
             .state('saapp.market', {
                 url: 'market',
                 views: {
